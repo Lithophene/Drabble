@@ -69,6 +69,8 @@
             Brody nods and places his hand on your arm. "Okay, I'll stop asking.
             *goto BrodyGood
           #"I'm okay," I say. "I'm happy you're worried about me."
+	    *if brody_rival
+	      *set brody_rival false
             *set brody_faction %+(round(empathy/6))
             *set ideal %+10
             Brody smiles and places his hand on your arm. "No problem.
@@ -86,10 +88,16 @@
             *goto BrodyGood
             
         *label BrodyGood
-        Since you helped us in the school, I've felt different, you know? I realize that you're kinda special. I'm not good with words, but I like you."
-        *if impulse >= 60
-          He draws his body in close to yours.
-        His hand slides up your arm.
+        *if brody_rival
+	  [New variant for a rivalmanced!Brody]
+	  *goto BrodyRivalChoices
+	*if not(brody_rival)
+	  Since you helped us in the school, I've felt different, you know? I realize that you're kinda special. I'm not good with words, but I like you."
+          *if impulse >= 60
+            He draws his body in close to yours.
+          His hand slides up your arm.
+	  *goto BrodyGoodChoices
+	*label BrodyGoodChoices
         *choice
           #"I like you too."
             *set morality %+10
@@ -103,11 +111,23 @@
                 *label TheKiss   
                 He tastes sweet, like mint, and his tongue plays on the underside of your upper lip. When he pulls back, he rubs the back of your neck and wears a tight smile.
                 
-                "That was nice," you say, still feeling a rush from the kiss. "You taste like mint."
+                *if brody_rival
+		  "Not bad,"
+		*if not(brody_rival)
+		  "That was nice," 
+		you say, still feeling a rush from the kiss. "You taste like mint."
                 
-                "I ate a hard candy earlier." Brody laughs, and you now see the tip of his tongue is still dyed green. "Maybe we should get back to scavenging. I hate to make everyone else do all the work. But I'm real glad this happened."
+                "I ate a hard candy earlier." Brody laughs, and you now see the tip of his tongue is still dyed green. "Maybe we should get back to scavenging. I hate to make everyone else do all the work.
+		*if brody_rival
+		  "
+		  
+		  He scratches the back of his head sheepishly and walks off, kicking at some loose gravel.
+		  *if (search >= 50) or (empathy >= 50)
+		    You get the impression he wants to look back but is forcing himself not to.
+		*if not(brody_rival)
+		  But I'm real glad this happened."
                 
-                He gives you a quick kiss and walks off, looking back for a moment to flash a smile.
+                  He gives you a quick kiss and walks off, looking back for a moment to flash a smile.
                 *goto FinishSedan
               #I give him a quick kiss first.
                 *set impulse %+10
@@ -195,6 +215,8 @@
         "Hey, like I said, I'm sorry about earlier. I really thought you were in danger."
         *choice
           #"It's fine, Brody. I was upset, but I know you wanted to help."
+	    *if brody_rival
+	      *set brody_rival false
             *set morality %+10
             *set ideal %+10
             *set brody_faction %+(round(empathy/8))
@@ -205,6 +227,8 @@
             *set ideal %-10
             *set brody_faction %+(round(empathy/8))
             "Cool. I'm glad we're okay. I don't like people being mad at me," he says.
+	    *if brody_rival
+	      [Something about Brody not realizing you're kinda brushing him off?]
             *goto AnswerBrody
           #"I accept your apology, but it's best if we keep away from each other for a while."
             *set truth %+10
@@ -215,8 +239,39 @@
             Brody blinks hard a few times in a row. "Okay, I get it. Just glad everything turned out alright." He turns and walks away, though as he passes an abandoned car, he slams his hand on the hood.
             *goto FinishSedan
           #"Next time just use your head, or at least try to. I know thinking is hard for you."
+	    *if not(brody_rival)
+	      *set brody_rival true
             *set morality %-10
             *set impulse %+10
             *set brody_faction %-(round(25-(empathy/5)))
             Brody blinks hard a few times in a row. "Okay, I get it. You're pissed. I did try to help, but you don't have to be a jerk about it. See you later." He turns and walks away, though as he passes an abandoned car, he slams his hand on the hood.
             *goto FinishSedan
+	    
+*label BrodyRivalChoices
+*choice
+  #"Look, I'm sorry. These last few days have been crazy."
+    *set truth %+10
+    *set ideal %+10
+    *set brody_faction %+(round(empathy/8))
+    *set brody_rival false
+    [Brody visibly perks up. Reuse confession text after minor transition?]
+    *goto BrodyGoodChoices
+  #"I never liked you, Brody. You're the one who kissed me."
+    *set truth %+10
+    *set ideal %-10
+    *set brody_like 0
+    *set brody_other 2
+    *set brody_faction %-(round(25-(empathy/5)))
+    [Brody hangs his head and shakes his head. Rejections are hard.]
+    *goto FinishSedan
+  #I pull him into a kiss.
+    *set impulse %+15
+    *set brody_like 1
+    You grab his jersey and yank him into you, and the sudden movement knocks him off balance. His body falls into you, and his weight rests on your chest and stomach as your lips press into his.
+    *goto TheKiss
+  #I don't want to talk, just make-out.
+    *set impulse %+15
+    *set brody_like 1
+    You grab Brody's jersey and pull him towards a vacant car. Popping open the back door, you shove him inside. The interior has already been looted, so the backseat is cleared of debris.
+    *goto CarMakeOut
+  
