@@ -1,0 +1,222 @@
+*create brody_rival false
+
+[BREAK]
+
+      #Shove him away. "What the hell? You almost killed me!"
+        *if teenager
+          *set brody_rival true
+        *set impulse %+10
+        *set brody_faction %-(round(25-(empathy/5)))
+        As Brody reaches down to help, you shove him. He backpedals a few steps. "Why would you shoot past me, or were you trying to hit me and missed?"
+        
+        "I just saw that thing hit the window, and I reacted. Something told me the glass wouldn't hold long, and you may not have a chance to stop it."
+        
+        "You could have shot me. At least yell for me to get out of the way."
+        *if madison_faction >= 55
+        
+          "Yeah, Brody. What the hell do you think you're doing?" Madison yells.
+        *comment end/
+          
+        "Iâ€”I'm sorry," he stammers. "I just didn't think."
+        *goto EndSedan
+      #Leap up and lunge at Brody. "Don't ever do that again!"
+        *if teenager
+          *set brody_rival true
+        *set impulse %+20
+        *set brody_faction %-(round(30-(empathy/5)))
+        *set madison_faction %-(round(25-(empathy/5)))
+        As Brody reaches down to help, you leap up and shove him hard,
+        *if athletics >= 60
+          driving him back to the hood of the car with a violent slam.
+        *if athletics < 60
+          knocking him back a few feet. He's strong and resists your action but shock shows on his face.
+        *comment end/
+        
+        "What?" he says, his face showing clear surprise.
+        
+        "Why the hell would you shoot so close to me? Were you trying to hit me and missed?"
+        
+        "No, of course not. That zombie was trying to get at youâ€”"
+        
+        "So you couldn't warn me first?"
+        
+        "I just saw that thing hit the window, and I reacted. Something told me the glass wouldn't hold long, and you may not have a chance to stop it. Iâ€”I'm sorry," he stammers, as he
+        *if athletics >= 60
+          stands.
+        *if athletics < 60
+          steps back towards you.
+        "I just didn't think."
+        *goto EndSedan
+		
+[BREAK]
+
+    *elseif (teenager and like_males) and (brody_faction >= 65)
+      *label BrodyRO
+      
+      As the crowd separates, Brody makes his way to you.
+      *if brody_helped
+        *label AnswerBrody
+        "You're sure you're good?"
+        *choice
+          #"I'm fine," I say. "Thanks for asking."
+            *set brody_faction %+(round(empathy/8))
+            *set morality %+10
+            Brody smiles and places his hand on your arm. "No problem.
+            *goto BrodyGood
+          #"I'm fine," I say. "But yes, I don't want people to worry about me."
+            *set brody_faction %+(round(empathy/6))
+            *set ideal %-10
+            Brody nods and places his hand on your arm. "Okay, I'll stop asking.
+            *goto BrodyGood
+          #"I'm okay," I say. "I'm happy you're worried about me."
+            *set brody_faction %+(round(empathy/6))
+            *set ideal %+10
+            Brody smiles and places his hand on your arm. "No problem.
+            *goto BrodyGood
+          #"I'm good," I say. I want to stay strong in front of him.
+            *set brody_faction %+(round(empathy/10))
+            *set truth %+10
+            Brody nods and places his hand on your arm. "Glad to hear.
+            *goto BrodyGood
+          #"I'm okay," I say. "I don't like people worrying about me."
+            *set morality %-10
+            *set ideal %-10
+            *set brody_faction %-(round(20-(empathy/7)))
+            Brody nods and places his hand on your arm. "Okay, sorry.
+            *goto BrodyGood
+            
+        *label BrodyGood
+        Since you helped us in the school, I've felt different, you know? I realize that you're kinda special. I'm not good with words, but I like you."
+        *if impulse >= 60
+          He draws his body in close to yours.
+        His hand slides up your arm.
+        *choice
+          #"I like you too."
+            *set morality %+10
+            *set brody_like 1
+            Brody moves in even closer, and he takes a quick look around the area to see if anyone is watching. "I'm going to kiss you now," he says and stares back into your eyes.
+            *choice
+              #I let him kiss me.
+                *set impulse %-10
+                *set ideal %+10
+                Brody leans in further and further, inching closer, and you hear your heart hammering in anticipation. His body rests against yours, and you feel his weight as his lips touch your own.
+                *label TheKiss   
+                He tastes sweet, like mint, and his tongue plays on the underside of your upper lip. When he pulls back, he rubs the back of your neck and wears a tight smile.
+                
+                "That was nice," you say, still feeling a rush from the kiss. "You taste like mint."
+                
+                "I ate a hard candy earlier." Brody laughs, and you now see the tip of his tongue is still dyed green. "Maybe we should get back to scavenging. I hate to make everyone else do all the work. But I'm real glad this happened."
+                
+                He gives you a quick kiss and walks off, looking back for a moment to flash a smile.
+                *goto FinishSedan
+              #I give him a quick kiss first.
+                *set impulse %+10
+                *set ideal %+10
+                You drive your mouth forward into his, pushing your body against his chest and stomach. 
+                *goto TheKiss
+              *if group1_vehicle != "motorcycle"
+                #I pull him into my ${group1_vehicle}, so we can have some privacy.
+                  You grab Brody's jersey and pull him towards your ${group1_vehicle}. Popping open the back door, you shove him inside.
+                  *goto CarMakeOut
+              *if group1_vehicle = "motorcycle"
+                #I pull him into an empty car, so we can have some privacy.
+                  You grab Brody's jersey and pull him towards a vacant car. Popping open the back door, you shove him inside. The interior has already been looted, so the backseat is cleared of debris.
+                  *label CarMakeOut
+                  *set impulse %+15
+                  "What are you doing?" he laughs in excitement, as he climbs deeper into the back.
+                  
+                  You slide in next to him and slam the door shut, and as soon as you turn, you're on him, driving your mouth on to his. He wraps his strong arms around your back, and you lean in hard until his body falls flat on the seat. You lie on him as his lips caress your own. He tastes sweet, like mint, and his tongue plays on the underside of your upper lip.
+                  
+                  With each touch and each kiss, he matches your intensity: pulling at your shirt, grinding his hips, pushing fingers through your hair. For a few minutes you lose all sense of time and place. It's not the middle of the apocalypseâ€”it's the company of a gorgeous young man in a safe place.
+                  
+                  When he finally forces you back, he rubs the back of your neck and wears a curious smile.
+                
+                  "Wow, I didn't expect that. It was nice," he says.
+                  
+                  "I just had to do it," you say, still feeling a rush from the action. "You taste like mint."
+                
+                  "I ate a hard candy earlier." Brody laughs, and you now see the tip of his tongue is still dyed green. "Maybe we should get back to scavenging. I hate to make everyone else do all the work, and someone's gonna spot us back here. But I'm real glad this happened."
+                
+                  You fix his jersey and give him a quick kiss before you exit the vehicle. Once outside, he walks off, looking back for a moment to flash a smile.
+                  *goto FinishSedan
+              #I hold him back. "Not here. I want to kiss you, but later when it's just us."
+                *set impulse %-10
+                *set ideal %-10
+                As he leans in, you put your hands on his chest to stop him.
+                
+                "Okay, that's fine," he says through a deep sigh, clearly disappointed. "Later, when no one's around. I can wait."
+                
+                He takes a step back and scans the area. "Maybe we should get back to scavenging. I hate to make everyone else do all the work. But I'm real glad this happened."
+                
+                "See ya, Brody."
+                
+                He walks off, looking back for a moment to flash a smile.
+                *goto FinishSedan
+          #"Sorry, it's not the right time, Brody. I can't get into a relationship right now."
+            *set morality %+10
+            *label RejectBrody
+            *set truth %+10
+            *set brody_like 0
+            *set brody_other 2
+            *set brody_faction %-(round(25-(empathy/5)))
+            Brody blinks hard a few times in a row. "You're not into me? Hmm. Okay, I know it's a bad time and all. Not sure when there's a good time."
+            
+            "It's just thatâ€”"
+            
+            "No, it's cool. Nothing to explain."
+            
+            He takes a step back and scans the area. "Maybe we should get back to scavenging. I hate to make everyone else do all the work. But I'm real glad this happened."
+                
+            "See ya, Brody."
+                
+            He walks off, never looking back.
+            *goto FinishSedan
+          #"You like me? Show me," I say and lean into him.
+            *set impulse %+15
+            *set brody_like 1
+            Brody wastes no time and drives his mouth towards yours, and though you wait for the hard kiss, it's much softer and tender. His body rests against yours, and you feel his weight as his lips caress your own.
+            *goto TheKiss
+          #I pull him into a kiss.
+            *set impulse %+15
+            *set brody_like 1
+            You grab his jersey and yank him into you, and the sudden movement knocks him off balance. His body falls into you, and his weight rests on your chest and stomach as your lips press into his.
+            *goto TheKiss
+          #I don't want to talk, just make-out.
+            *set impulse %+15
+            *set brody_like 1
+            You grab Brody's jersey and pull him towards a vacant car. Popping open the back door, you shove him inside. The interior has already been looted, so the backseat is cleared of debris.
+            *goto CarMakeOut
+          #"The feeling isn't mutual, Brody."
+            *set morality %-10
+            *set brody_like 0
+            *set brody_other 2
+            *goto RejectBrody
+      *else
+        "Hey, like I said, I'm sorry about earlier. I really thought you were in danger."
+        *choice
+          #"It's fine, Brody. I was upset, but I know you wanted to help."
+            *set morality %+10
+            *set ideal %+10
+            *set brody_faction %+(round(empathy/8))
+            "Cool. I'm glad we're okay. I don't like people being mad at me," he says.
+            *goto AnswerBrody
+          #"It's fine, Brody. Don't worry about it," I say.
+            *set truth %-10
+            *set ideal %-10
+            *set brody_faction %+(round(empathy/8))
+            "Cool. I'm glad we're okay. I don't like people being mad at me," he says.
+            *goto AnswerBrody
+          #"I accept your apology, but it's best if we keep away from each other for a while."
+            *set truth %+10
+            *set ideal %-10
+            *set brody_like 0
+            *set brody_other 2
+            *set brody_faction %-(round(15-(empathy/8)))
+            Brody blinks hard a few times in a row. "Okay, I get it. Just glad everything turned out alright." He turns and walks away, though as he passes an abandoned car, he slams his hand on the hood.
+            *goto FinishSedan
+          #"Next time just use your head, or at least try to. I know thinking is hard for you."
+            *set morality %-10
+            *set impulse %+10
+            *set brody_faction %-(round(25-(empathy/5)))
+            Brody blinks hard a few times in a row. "Okay, I get it. You're pissed. I did try to help, but you don't have to be a jerk about it. See you later." He turns and walks away, though as he passes an abandoned car, he slams his hand on the hood.
+            *goto FinishSedan
